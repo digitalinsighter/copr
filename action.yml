@@ -16,24 +16,25 @@ inputs:
 outputs:
   copr-result:
     description: "Result of copr"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+    value: ${{ steps.copr-test.outputs }}
 runs:
   using: "composite"
   steps:
     - name: Pull binaries down && extract
       shell: bash
       run: |
-        wget http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}/centos7/tikv-server.tar.gz
-        wget http://fileserver.pingcap.net/download/builds/pingcap/tidb/${{ inputs.tidb-commit-id }}/centos7/tidb-server.tar.gz
-        wget http://fileserver.pingcap.net/download/builds/pingcap/pd/${{ inputs.pd-commit-id }}/centos7/pd-server.tar.gz
+        wget -q http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}/centos7/tikv-server.tar.gz
+        wget -q http://fileserver.pingcap.net/download/builds/pingcap/tidb/${{ inputs.tidb-commit-id }}/centos7/tidb-server.tar.gz
+        wget -q http://fileserver.pingcap.net/download/builds/pingcap/pd/${{ inputs.pd-commit-id }}/centos7/pd-server.tar.gz
 
         mkdir pd tidb tikv
         tar -xvf pd-server.tar.gz -C pd
         tar -xvf tikv-server.tar.gz -C tikv
         tar -xvf tidb-server.tar.gz -C tidb
 
-    - name: List directories
+    - name: copr-test
+      id: copr-test
       shell: bash
       run: |
-        ls && pwd
+        pd_bin=./pd/bin/pd-server tikv_bin=./tikv/bin/tikv-server tidb_src_dir=./tidb make push-down-test
 
