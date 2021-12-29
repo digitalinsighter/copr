@@ -32,11 +32,10 @@ runs:
         tar -xf tikv-server.tar.gz -C tikv
         tar -xf tidb-server.tar.gz -C tidb
 
-        ls && pwd
-
     - name: copr-test
       id: copr-test
       shell: bash
       run: |
+        ls && pwd
         pd_bin=./pd/bin/pd-server tikv_bin=./tikv/bin/tikv-server tidb_src_dir=./tidb make push-down-test
 
