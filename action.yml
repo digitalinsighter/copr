@@ -37,5 +37,5 @@ runs:
       shell: bash
       run: |
         ls && pwd
-        pd_bin=./pd/bin/pd-server tikv_bin=./tikv/bin/tikv-server tidb_src_dir=./tidb make push-down-test
+        pd_bin=$(pwd)/pd/bin/pd-server tikv_bin=$(pwd)/tikv/bin/tikv-server tidb_src_dir=$(pwd)/tidb make push-down-test
 
