@@ -1,0 +1,39 @@
+name: 'Copr test'
+description: 'TiDB Copr Test'
+inputs:
+  tidb-commit-id:
+    description: 'tidb-commit-id'
+    required: true
+    default: '7647c2b9b0b08b4995a8b58e47000cf7cd0b3240'
+  tikv-commit-id:
+    description: 'tikv-commit-id'
+    required: true
+    default: 'ef3f7917ed9bf1755e89a0abdc7804d9c5de8fda'
+  pd-commit-id:
+    description: 'pd-commit-id'
+    required: true
+    default: '909f2fdebb3f06b704dfc4498b498708efe9ee32'
+outputs:
+  copr-result:
+    description: "Result of copr"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: "composite"
+  steps:
+    - run: Pull binaries down && extract
+      shell: bash
+      run: |
+        http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}//centos7/tikv-server.tar.gz
+        http://fileserver.pingcap.net/download/builds/pingcap/tidb/${{ inputs.tidb-commit-id }}//centos7/tidb-server.tar.gz
+        http://fileserver.pingcap.net/download/builds/pingcap/pd/${{ inputs.pd-commit-id }}//centos7/pd-server.tar.gz
+
+        mkdir pd tidb tikv
+        tar -xvf pd-server.tar.gz -C pd
+        tar -xvf tikv-server.tar.gz -C tikv
+        tar -xvf tidb-server.tar.gz -C tidb
+
+    - run: List directories
+      shell: bash
+      run: |
+        ls && pwd
+
