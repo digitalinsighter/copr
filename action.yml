@@ -32,6 +32,8 @@ runs:
         tar -xf tikv-server.tar.gz -C tikv
         tar -xf tidb-server.tar.gz -C tidb
 
+        ls && pwd
+
     - name: copr-test
       id: copr-test
       shell: bash
