@@ -23,9 +23,9 @@ runs:
     - name: Pull binaries down && extract
       shell: bash
       run: |
-        http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}//centos7/tikv-server.tar.gz
-        http://fileserver.pingcap.net/download/builds/pingcap/tidb/${{ inputs.tidb-commit-id }}//centos7/tidb-server.tar.gz
-        http://fileserver.pingcap.net/download/builds/pingcap/pd/${{ inputs.pd-commit-id }}//centos7/pd-server.tar.gz
+        wget http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}/centos7/tikv-server.tar.gz
+        wget http://fileserver.pingcap.net/download/builds/pingcap/tidb/${{ inputs.tidb-commit-id }}/centos7/tidb-server.tar.gz
+        wget http://fileserver.pingcap.net/download/builds/pingcap/pd/${{ inputs.pd-commit-id }}/centos7/pd-server.tar.gz
 
         mkdir pd tidb tikv
         tar -xvf pd-server.tar.gz -C pd
