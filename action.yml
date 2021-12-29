@@ -20,7 +20,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: Pull binaries down && extract
+    - name: Pull binaries down && extract
       shell: bash
       run: |
         http://fileserver.pingcap.net/download/builds/pingcap/tikv/${{ inputs.tikv-commit-id }}//centos7/tikv-server.tar.gz
@@ -32,7 +32,7 @@ runs:
         tar -xvf tikv-server.tar.gz -C tikv
         tar -xvf tidb-server.tar.gz -C tidb
 
-    - run: List directories
+    - name: List directories
       shell: bash
       run: |
         ls && pwd
